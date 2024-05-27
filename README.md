@@ -11,7 +11,7 @@ __TinyAI__
 ----------------------
 2. Model selection, Training and Evaluation
 
-<img height="100" width="200" alt="image" src="https://github.com/WiresharkIO/IES_SEG-EAI/assets/14985440/aa8a3c90-ce76-44ce-bed1-6de835890aa5"> <img height="100" width="200" alt="image" src="https://github.com/WiresharkIO/IES_SEG-EAI/assets/14985440/afe591eb-885c-42a5-92e0-440782d13821"> <img height="100" width="200" alt="image" src="https://github.com/WiresharkIO/IES_SEG-EAI/assets/14985440/f9b49c1c-710b-43bc-adc7-7a52c4419f3f">
+<img height="125" width="250" alt="image" src="https://github.com/WiresharkIO/IES_SEG-EAI/assets/14985440/aa8a3c90-ce76-44ce-bed1-6de835890aa5"> <img height="125" width="250" alt="image" src="https://github.com/WiresharkIO/IES_SEG-EAI/assets/14985440/afe591eb-885c-42a5-92e0-440782d13821"> <img height="125" width="250" alt="image" src="https://github.com/WiresharkIO/IES_SEG-EAI/assets/14985440/f9b49c1c-710b-43bc-adc7-7a52c4419f3f">
 
 ----------------------
 3. Model library and Inference
