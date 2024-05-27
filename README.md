@@ -23,7 +23,20 @@ __TinyAI__
 
 ---------------------
 
+> Problems resolved
 
+1. "Not able to find Index" in STM32 Cube IDE during Building project
+- Try with Project--> c/c++ Index --> Rebuild
+
+2. Not able to connect to serial terminal like "putty"
+- Try with checking:
+  1. windows-->device manager--> desired COM port properties and set desired communication rate and other vals.
+  2. check/set proper TIMER parameters in IDE configuration window.
+  3. if using putty check serial communiation configuration and set it equal to the values set elsewhere.
+
+3. ..
+
+---------------------
 __References__
 
 TO DO..
