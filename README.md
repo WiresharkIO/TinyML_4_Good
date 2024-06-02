@@ -30,4 +30,6 @@ __TinyAI__
 ---------------------
 > __References__
 
-TO DO..
+[1] "Convert an XGBoost model into ONNX", ONNX, Available: https://onnx.ai/sklearn-onnx/auto_tutorial/plot_gexternal_xgboost.html
+
+[2] "Model Optimization", ONNX Runtime, Available: https://onnxruntime.ai/docs/performance/model-optimizations/quantization.html
