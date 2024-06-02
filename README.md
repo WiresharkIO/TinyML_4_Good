@@ -10,7 +10,7 @@ __TinyAI__
 ---------------------
 > Problems existing
 
-1. During quantization - InferenceError: [ShapeInferenceError] (op_type:ZipMap, node name: ZipMap): [ShapeInferenceError] type case unsupported for symbolic shape inference. inferred=5
+1. ..
 
 
 > Problems resolved
@@ -24,7 +24,8 @@ __TinyAI__
   2. check/set proper TIMER parameters in IDE configuration window.
   3. if using putty check serial communiation configuration and set it equal to the values set elsewhere.
 
-
+3. During quantization - InferenceError: [ShapeInferenceError] (op_type:ZipMap, node name: ZipMap): [ShapeInferenceError] type case unsupported for symbolic shape inference. inferred=5
+- Refer --> https://github.com/onnx/sklearn-onnx/issues/816
 
 ---------------------
 > __References__
