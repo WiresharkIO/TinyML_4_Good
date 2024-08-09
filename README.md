@@ -27,6 +27,14 @@ __TinyAI__
 3. During quantization - InferenceError: [ShapeInferenceError] (op_type:ZipMap, node name: ZipMap): [ShapeInferenceError] type case unsupported for symbolic shape inference. inferred=5
 - Refer --> https://github.com/onnx/sklearn-onnx/issues/816
 
+4. Invalid Initializer error with auto-generated code X-CUBE-AI
+- Refer --> https://community.st.com/t5/edge-ai/invalid-initializer-error-with-auto-generated-code-x-cube-ai/td-p/104534
+
+5. [STM32F411-Discovery Board] HAL_RCC_OscConfig() always returns HSE_TIMEOUT
+- Changing from BYPASS clock source to Crystal/Ceramic Resonator in RCC and then power-cycling(RESET) the board was the solution.
+
+6. https://community.st.com/t5/stm32-mcus-boards-and-hardware/i-could-not-upgrade-st-link-firmware-i-always-get-an-error-using/td-p/220944
+
 ---------------------
 > __References__
 
