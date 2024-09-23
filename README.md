@@ -10,7 +10,9 @@ __TinyAI__
 ---------------------
 > Problems existing
 
-1. ..
+<img width="200" alt="image" src="https://github.com/user-attachments/assets/fecb3756-a139-49f5-bcd5-d05fec972a44">
+
+--> Yet to get a new one..
 
 
 > Problems resolved
