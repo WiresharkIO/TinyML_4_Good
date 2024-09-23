@@ -11,3 +11,8 @@ Do something and infer/classify the raw-data, to know what's actually going on i
 ---------------------------
 
 > A possible pipeline for the above tasks and constraints could be:
+
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/99dabd7f-db1e-4a56-957b-356ae59fc311">
+
+
+---------------------------
