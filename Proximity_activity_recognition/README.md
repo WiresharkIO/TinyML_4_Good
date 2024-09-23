@@ -1,5 +1,5 @@
 ----------------------------
-What is this repository about ?
+What is this section about ?
 ---------------------------
 
 Consider a Black Box where you are getting values from a proximity sensor (imagine anything) as a time-series data. You want to predict and do inference with those values for certain classes, using best approaches such just it is optimized to full possibility and doesn't create any overhead during real-time communications.
