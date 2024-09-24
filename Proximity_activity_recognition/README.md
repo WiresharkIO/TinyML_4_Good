@@ -16,3 +16,26 @@ Do something and infer/classify the raw-data, to know what's actually going on i
 
 
 ---------------------------
+
+Some of the feature selection methods used here, in-general and in-specific to LinearSVC(model used here)
+
+> In general approach :
+
+1. mRMR - https://github.com/smazzanti/mrmr
+
+2. SHAP(SHapley Additive exPlanations) explain the impact of different features on the output of the model. Its values show how much each 
+feature contributes to the model's decision, providing insight into feature importance.
+
+Features at the top have a higher impact on the model’s output(importance) compared to those at the bottom. The more the spread from 0, 
+the larger the impact of that particular feature.
+
+> Model specific approach :
+
+SVM weighting - using the absolute coefficients. These weights/coefficients tells how important each feature is to the decision boundary 
+created by the model. The larger the absolute value of the weight, the more significant the feature is for classification.
+
+TO DO..
+
+- Recursive Feature Elimination (RFE).
+
+---------------------------

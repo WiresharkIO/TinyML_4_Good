@@ -1,11 +1,9 @@
 import pandas as pd
 import numpy as np
-from sklearn import svm
-from sklearn.svm import LinearSVC, SVC
-from sklearn.calibration import CalibratedClassifierCV
+from sklearn.svm import LinearSVC
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, classification_report
 from datetime import datetime
 from definitions import ROOT_DIR
 from os import walk
@@ -61,38 +59,24 @@ def call_svm():
     X_test_standardized = scaler.transform(X_test)
 
     # joblib.dump(scaler, 'SVM_Linear_models/scaler.joblib')
-
-    svc = LinearSVC(C=0.1, dual=False, loss='squared_hinge', penalty='l2') # nsamples > nfeatures, so primal problem is solved
-    param_grid = {
-        'C': [0.1, 1, 10, 100],
-        # 'penalty': ['l2', 'l1'],
-        # 'loss': ['hinge', 'squared_hinge'],
-        # 'dual': [True, False],
-        'class_weight': [{0: 1, 1: 10}, 'balanced'],
-        'max_iter': [10000, 15000, 20000]
-    }
     scoring = ['accuracy', 'precision', 'recall', 'f1']
-    grid_search = GridSearchCV(svc, param_grid, cv=5, scoring=scoring, verbose=5, refit='f1', error_score='raise', n_jobs=8)
+    def train_svm_linear():
+        svc = LinearSVC(C=0.1, dual=False, loss='squared_hinge', penalty='l2', class_weight={0: 1, 1: 10}, max_iter=10000,
+                        verbose=True)
+        svc.fit(X_train_standardized, y_train)
+        return svc
+
+    svc_linear= train_svm_linear()
 
     try:
 
-        grid_search.fit(X_train_standardized, y_train)
+        # joblib.dump(svc_linear, modelFolder + 'best_svc_linear_3s.joblib')
+        # print("model saved as 'best_svm_model.joblib'")
+        #
+        # joblib.dump(scaler, modelFolder + 'svc_linear_scaler_3s.joblib')
+        # print("Scaler saved as 'scaler.joblib'")
 
-        best_params = grid_search.best_params_
-        print("Best hyperparameters found:", best_params)
-        # svc.fit(X_train_standardized, y_train)
-
-        best_svc = grid_search.best_estimator_
-
-        # Save the model
-        joblib.dump(best_svc, modelFolder + 'best_svc_linear_3s.joblib')
-        print("Best model saved as 'best_svm_model.joblib'")
-
-        # Save the scaler
-        joblib.dump(scaler, modelFolder + 'svc_linear_scaler_3s.joblib')
-        print("Scaler saved as 'scaler.joblib'")
-
-        y_pred = best_svc.predict(X_test_standardized)
+        y_pred = svc_linear.predict(X_test_standardized)
 
         accuracy_overall = accuracy_score(y_test, y_pred)
         f1_overall = f1_score(y_test, y_pred)
@@ -104,18 +88,23 @@ def call_svm():
         print(f"Recall: {precision_overall:.4f}")
         print(f"F1-score: {recall_overall:.4f}")
 
+        # report = classification_report(y_test, y_pred, output_dict=True)
+        # f1_score_class_1 = report['1']['f1-score']
+        # print(f"F1-score: {f1_score_class_1:.4f}")
+
         cm = confusion_matrix(y_test, y_pred)
         plt.figure(figsize=(10, 8))
         sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
         plt.title('Confusion Matrix')
         plt.ylabel('True label')
         plt.xlabel('Predicted label')
-        plt.savefig(modelFolder + 'confusion_matrix_svmW_mMRMR12_rbf.png')
+        plt.savefig(modelFolder + 'confusion_matrix_svc_linear.png')
+        plt.show()
         plt.close()
 
         print("Ended SVM Training at: " + str(datetime.now()))
 
-        svm_fi = np.abs(svc.coef_).sum(axis=0)
+        svm_fi = np.abs(svc_linear.coef_).sum(axis=0)
         svm_fr = np.argsort(-svm_fi)
 
         mrmr_features = mrmr_classif(X=featuresDataframe_MRMR, y=labelDataframe_MRMR, K=30)
@@ -130,10 +119,9 @@ def call_svm():
 
 
         try:
-            explainer = shap.LinearExplainer(best_svc, X_train_standardized)
+            explainer = shap.LinearExplainer(svc_linear, X_train_standardized)
             shap_values = explainer.shap_values(X_train_standardized)
 
-            # Create feature names
             feature_names = [f'Feature {i}' for i in range(X_train_standardized.shape[1])]
 
             # Summary plot
@@ -146,7 +134,7 @@ def call_svm():
 
             # Detailed summary plot
             plt.figure(figsize=(10, 12))
-            shap.summary_plot(shap_values, X_train_standardized, feature_names=feature_names)
+            shap.summary_plot(shap_values, X_train_standardized, plot_type="violin", feature_names=feature_names)
             plt.title(f"SHAP Summary Plot")
             plt.tight_layout()
             plt.savefig('shap_summary_plot.png')
@@ -169,7 +157,6 @@ def call_svm():
             print(traceback.format_exc())
             print("But don't worry, the best model and scaler are still saved.")
             print("Ended SVM Training at: " + str(datetime.now()))
-
 
     except Exception as e:
         print("An error occurred during model training:")
