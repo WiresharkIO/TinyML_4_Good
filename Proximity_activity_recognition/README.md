@@ -2,11 +2,9 @@
 What is this section about ?
 ---------------------------
 
-Consider a Black Box where you are getting values from a proximity sensor (imagine anything) as a time-series data. You want to predict and do inference with those values for certain classes, using best approaches such just it is optimized to full possibility and doesn't create any overhead during real-time communications.
+Consider a Black-Box where you are getting values from a proximity sensor, as a time-series data. You want to predict and do inference with those values for certain classes using best approaches, such just it is optimized to full possibility and doesn't create any overhead during real-time communications.
 
-Assume you have a sensor, a microcontroller board (in this repository mostly everything is related to STM32-ULP).
-
-Do something and infer/classify the raw-data, to know what's actually going on in the stream.
+You have the sensor and a microcontroller board (in this repository mostly everything is related to STM32-ULP).
 
 ---------------------------
 
@@ -17,17 +15,20 @@ Do something and infer/classify the raw-data, to know what's actually going on i
 
 ---------------------------
 
-Some of the feature selection methods used here, in-general and in-specific to LinearSVC(model used here)
+Some of the feature selection methods used here, in-general and in-specific to LinearSVC(the model)
+
 
 > In general approach :
 
-1. mRMR - https://github.com/smazzanti/mrmr
+1. minimum Redundancy - Maximum Relevance(mRMR) - https://github.com/smazzanti/mrmr
 
 2. SHAP(SHapley Additive exPlanations) explain the impact of different features on the output of the model. Its values show how much each 
 feature contributes to the model's decision, providing insight into feature importance.
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/3e2300ad-b6dd-47e1-b41a-43cdceac1805">
 
 Features at the top have a higher impact on the model’s output(importance) compared to those at the bottom. The more the spread from 0, 
 the larger the impact of that particular feature.
+
 
 > Model specific approach :
 
