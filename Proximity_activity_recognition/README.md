@@ -8,7 +8,16 @@ You have the sensor and a microcontroller board (in this repository mostly every
 
 ---------------------------
 
-> A possible pipeline for the above tasks and constraints could be:
+> A possible pipeline could be:
+
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/d01518fb-2677-4baa-8f14-3a666e83e03d">
+
+
+---------------------------
+
+---------------------------
+
+> A more representational pipeline could be:
 
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/99dabd7f-db1e-4a56-957b-356ae59fc311">
 
