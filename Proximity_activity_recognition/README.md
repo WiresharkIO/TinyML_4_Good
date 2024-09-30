@@ -28,9 +28,12 @@ You have the sensor and a microcontroller board (in this repository mostly every
 
 > One possible approach for data annotation after raw data collection from sensors:
 
+__Label Studio - https://labelstud.io//__
+
 <img width="600" alt="pipeline_annotated_TS_TCD" src="https://github.com/user-attachments/assets/0d8829f1-3bb6-4864-ac3d-3fb70903cbce">
 
-__How the data could look__
+---------------------------
+__How the data could look like:__
 
 <img width="600" alt="annotated_TS_TCD" src="https://github.com/user-attachments/assets/e7648c5d-e48f-4f69-a6f7-86090d56dac6">
 
