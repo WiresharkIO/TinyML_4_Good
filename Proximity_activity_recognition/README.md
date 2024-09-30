@@ -15,15 +15,13 @@ You have the sensor and a microcontroller board (in this repository mostly every
 
 ---------------------------
 
----------------------------
-
 > A more representational pipeline could be:
 
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/99dabd7f-db1e-4a56-957b-356ae59fc311">
 
 
 ---------------------------
-
+Data Collection and Annotation
 ---------------------------
 
 > One possible approach for data annotation after raw data collection from sensors:
@@ -39,6 +37,12 @@ __How the data could look like:__
 
 
 ---------------------------
+Feature Engineering
+---------------------------
+<img width="600" src="https://github.com/user-attachments/assets/471ed7df-816f-4eca-a1d7-9850012cb563">
+
+Ref: https://www.geeksforgeeks.org/what-is-feature-engineering/
+
 
 Some of the feature selection methods used here, in-general and in-specific to LinearSVC(the model)
 
