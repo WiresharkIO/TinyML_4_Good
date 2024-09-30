@@ -37,8 +37,13 @@ __How the data could look like:__
 
 
 ---------------------------
-Feature Engineering
+# Feature Engineering 
 ---------------------------
+
+__Transforming raw data into features__
+
+__The performance of ML models heavily depends on the relevance of the features used to train them.__
+
 <img width="600" src="https://github.com/user-attachments/assets/471ed7df-816f-4eca-a1d7-9850012cb563">
 
 Ref: https://www.geeksforgeeks.org/what-is-feature-engineering/
