@@ -78,7 +78,7 @@ created by the model. The larger the absolute value of the weight, the more sign
 
 TO DO..
 
-- Recursive Feature Elimination (RFE).
+- ~~Recursive Feature Elimination (RFE).~~ DONE
 - Improve model metrics of LinearSVC.
 - Implement EfficientNet or EfficientNet-Lite
 - Explore On-device learning
