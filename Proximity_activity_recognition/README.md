@@ -73,8 +73,18 @@ the larger the impact of that particular feature.
 
 > Model specific approach :
 
-SVM weighting - using the absolute coefficients. These weights/coefficients tells how important each feature is to the decision boundary 
+__SVM weighting__ - using the absolute coefficients. These weights/coefficients tells how important each feature is to the decision boundary 
 created by the model. The larger the absolute value of the weight, the more significant the feature is for classification.
+
+__Recursive feature elimination__ - least important features are pruned from the current set of features.
+
+    svc = LinearSVC(C=0.1, dual=False, loss='squared_hinge', penalty='l2', class_weight={0: 1, 1: 10}, max_iter=10000, verbose=True)
+    rfe = RFE(estimator=svc, n_features_to_select=30, step=1)
+    rfe.fit(X_train_standardized, y_train)
+    X_train_rfe = rfe.transform(X_train_standardized)
+    X_test_rfe = rfe.transform(X_test_standardized)
+    svc.fit(X_train_rfe, y_train)
+
 
 TO DO..
 
@@ -84,3 +94,6 @@ TO DO..
 - Explore On-device learning
 - Explore federated learning
 ---------------------------
+
+
+
