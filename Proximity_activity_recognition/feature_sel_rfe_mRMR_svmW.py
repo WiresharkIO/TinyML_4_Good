@@ -2,7 +2,8 @@ import pandas as pd
 import numpy as np
 from sklearn.svm import LinearSVC
 from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.model_selection import train_test_split
+from sklearn.feature_selection import RFE
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, classification_report
 from datetime import datetime
 from definitions import ROOT_DIR
@@ -57,27 +58,21 @@ def call_svm():
     scaler = StandardScaler()
     X_train_standardized = scaler.fit_transform(X_train)
     X_test_standardized = scaler.transform(X_test)
+	
+    svc = LinearSVC(C=0.1, dual=False, loss='squared_hinge', penalty='l2', class_weight={0: 1, 1: 10}, max_iter=10000,
+                    verbose=True)
 
-    # joblib.dump(scaler, 'SVM_Linear_models/scaler.joblib')
-    scoring = ['accuracy', 'precision', 'recall', 'f1']
-    def train_svm_linear():
-        svc = LinearSVC(C=0.1, dual=False, loss='squared_hinge', penalty='l2', class_weight={0: 1, 1: 10}, max_iter=10000,
-                        verbose=True)
-        svc.fit(X_train_standardized, y_train)
-        return svc
+    rfe = RFE(estimator=svc, n_features_to_select=30, step=1)
+    rfe.fit(X_train_standardized, y_train)
 
-    svc_linear= train_svm_linear()
+    X_train_rfe = rfe.transform(X_train_standardized)
+    X_test_rfe = rfe.transform(X_test_standardized)
+	
+    svc.fit(X_train_rfe, y_train)
 
     try:
 
-        # joblib.dump(svc_linear, modelFolder + 'best_svc_linear_3s.joblib')
-        # print("model saved as 'best_svm_model.joblib'")
-        #
-        # joblib.dump(scaler, modelFolder + 'svc_linear_scaler_3s.joblib')
-        # print("Scaler saved as 'scaler.joblib'")
-
-        y_pred = svc_linear.predict(X_test_standardized)
-
+        y_pred = svc.predict(X_test_rfe)
         accuracy_overall = accuracy_score(y_test, y_pred)
         f1_overall = f1_score(y_test, y_pred)
         precision_overall = precision_score(y_test, y_pred)
@@ -87,10 +82,6 @@ def call_svm():
         print(f"Precision: {f1_overall:.4f}")
         print(f"Recall: {precision_overall:.4f}")
         print(f"F1-score: {recall_overall:.4f}")
-
-        # report = classification_report(y_test, y_pred, output_dict=True)
-        # f1_score_class_1 = report['1']['f1-score']
-        # print(f"F1-score: {f1_score_class_1:.4f}")
 
         cm = confusion_matrix(y_test, y_pred)
         plt.figure(figsize=(10, 8))
@@ -104,7 +95,11 @@ def call_svm():
 
         print("Ended SVM Training at: " + str(datetime.now()))
 
-        svm_fi = np.abs(svc_linear.coef_).sum(axis=0)
+        selected_features = [features_list[i] for i in range(len(features_list)) if rfe.support_[i]]
+        print("Selected features by RFE:")
+        print(selected_features)
+
+        svm_fi = np.abs(svc.coef_).sum(axis=0)
         svm_fr = np.argsort(-svm_fi)
 
         mrmr_features = mrmr_classif(X=featuresDataframe_MRMR, y=labelDataframe_MRMR, K=30)
@@ -116,47 +111,6 @@ def call_svm():
         print(f"\nNumber of common features: {len(intersection)}")
         print("Common features:")
         print(list(intersection))
-
-
-        try:
-            explainer = shap.LinearExplainer(svc_linear, X_train_standardized)
-            shap_values = explainer.shap_values(X_train_standardized)
-
-            feature_names = [f'Feature {i}' for i in range(X_train_standardized.shape[1])]
-
-            # Summary plot
-            plt.figure(figsize=(10, 8))
-            shap.summary_plot(shap_values, X_train_standardized, plot_type="violin", feature_names=feature_names)
-            plt.title(f"SHAP Feature Importance")
-            plt.tight_layout()
-            plt.savefig('shap_feature_importance.png')
-            plt.close()
-
-            # Detailed summary plot
-            plt.figure(figsize=(10, 12))
-            shap.summary_plot(shap_values, X_train_standardized, plot_type="violin", feature_names=feature_names)
-            plt.title(f"SHAP Summary Plot")
-            plt.tight_layout()
-            plt.savefig('shap_summary_plot.png')
-            plt.close()
-
-            # SHAP dependence plot for the most important feature
-            most_important_feature = np.argmax(np.abs(shap_values).mean(0))
-            plt.figure(figsize=(10, 6))
-            shap.dependence_plot(most_important_feature, shap_values, X_train_standardized,
-                                 feature_names=feature_names)
-            plt.title(f"SHAP Dependence Plot for {feature_names[most_important_feature]}")
-            plt.tight_layout()
-            plt.savefig('shap_dependence_plot.png')
-            plt.close()
-
-            print("SHAP analysis completed and plots saved.")
-
-        except Exception as e:
-            print("An error occurred during SHAP analysis:")
-            print(traceback.format_exc())
-            print("But don't worry, the best model and scaler are still saved.")
-            print("Ended SVM Training at: " + str(datetime.now()))
 
     except Exception as e:
         print("An error occurred during model training:")

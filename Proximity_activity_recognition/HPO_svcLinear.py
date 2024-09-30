@@ -60,8 +60,6 @@ def call_svm():
     X_train_standardized = scaler.fit_transform(X_train)
     X_test_standardized = scaler.transform(X_test)
 
-    # joblib.dump(scaler, 'SVM_Linear_models/scaler.joblib')
-
     svc = LinearSVC(C=0.1, dual=False, loss='squared_hinge', penalty='l2') # nsamples > nfeatures, so primal problem is solved
     param_grid = {
         'C': [0.1, 1, 10, 100],
@@ -77,20 +75,10 @@ def call_svm():
     try:
 
         grid_search.fit(X_train_standardized, y_train)
-
         best_params = grid_search.best_params_
         print("Best hyperparameters found:", best_params)
-        # svc.fit(X_train_standardized, y_train)
 
         best_svc = grid_search.best_estimator_
-
-        # Save the model
-        joblib.dump(best_svc, modelFolder + 'best_svc_linear_3s.joblib')
-        print("Best model saved as 'best_svm_model.joblib'")
-
-        # Save the scaler
-        joblib.dump(scaler, modelFolder + 'svc_linear_scaler_3s.joblib')
-        print("Scaler saved as 'scaler.joblib'")
 
         y_pred = best_svc.predict(X_test_standardized)
 
@@ -114,62 +102,6 @@ def call_svm():
         plt.close()
 
         print("Ended SVM Training at: " + str(datetime.now()))
-
-        svm_fi = np.abs(svc.coef_).sum(axis=0)
-        svm_fr = np.argsort(-svm_fi)
-
-        mrmr_features = mrmr_classif(X=featuresDataframe_MRMR, y=labelDataframe_MRMR, K=30)
-
-        fea_weighting = [features_list[i] for i in svm_fr[:30]]
-        fea_mRMR = mrmr_features
-
-        intersection = set(fea_weighting) & set(fea_mRMR)
-        print(f"\nNumber of common features: {len(intersection)}")
-        print("Common features:")
-        print(list(intersection))
-
-
-        try:
-            explainer = shap.LinearExplainer(best_svc, X_train_standardized)
-            shap_values = explainer.shap_values(X_train_standardized)
-
-            # Create feature names
-            feature_names = [f'Feature {i}' for i in range(X_train_standardized.shape[1])]
-
-            # Summary plot
-            plt.figure(figsize=(10, 8))
-            shap.summary_plot(shap_values, X_train_standardized, plot_type="violin", feature_names=feature_names)
-            plt.title(f"SHAP Feature Importance")
-            plt.tight_layout()
-            plt.savefig('shap_feature_importance.png')
-            plt.close()
-
-            # Detailed summary plot
-            plt.figure(figsize=(10, 12))
-            shap.summary_plot(shap_values, X_train_standardized, feature_names=feature_names)
-            plt.title(f"SHAP Summary Plot")
-            plt.tight_layout()
-            plt.savefig('shap_summary_plot.png')
-            plt.close()
-
-            # SHAP dependence plot for the most important feature
-            most_important_feature = np.argmax(np.abs(shap_values).mean(0))
-            plt.figure(figsize=(10, 6))
-            shap.dependence_plot(most_important_feature, shap_values, X_train_standardized,
-                                 feature_names=feature_names)
-            plt.title(f"SHAP Dependence Plot for {feature_names[most_important_feature]}")
-            plt.tight_layout()
-            plt.savefig('shap_dependence_plot.png')
-            plt.close()
-
-            print("SHAP analysis completed and plots saved.")
-
-        except Exception as e:
-            print("An error occurred during SHAP analysis:")
-            print(traceback.format_exc())
-            print("But don't worry, the best model and scaler are still saved.")
-            print("Ended SVM Training at: " + str(datetime.now()))
-
 
     except Exception as e:
         print("An error occurred during model training:")
