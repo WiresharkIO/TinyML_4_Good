@@ -88,7 +88,7 @@ Some of the feature selection methods used here, in-general and in-specific to L
 
 1. minimum Redundancy - Maximum Relevance(mRMR) - https://github.com/smazzanti/mrmr
 
-2. SHAP(SHapley Additive exPlanations) explain the impact of different features on the output of the model. Its values show how much each 
+2. SHAP(SHapley Additive exPlanations) - explains the impact of different features on the output of the model. Its values show how much each 
 feature contributes to the model's decision, providing insight into feature importance.
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/3e2300ad-b6dd-47e1-b41a-43cdceac1805">
 
