@@ -30,6 +30,31 @@ __Label Studio - https://labelstud.io//__
 
 <img width="600" alt="pipeline_annotated_TS_TCD" src="https://github.com/user-attachments/assets/0d8829f1-3bb6-4864-ac3d-3fb70903cbce">
 
+
+> An example of how configuration can be done in label-studio to represent different classes:
+```xml
+<View>
+
+<Header value="Time Series classification" style="font-weight: normal"/>
+        
+<Choices name="pattern" toName="ts">
+    <Choice value="Left_Prox"/>
+</Choices>
+
+<TimeSeriesLabels name="label" toName="ts">
+    <Label value="phase_1" background="red"/>
+    <Label value="phase_2" background="green"/>
+    <Label value="phase_3" background="yellow"/>
+    <Label value="phase_4" background="blue"/>
+</TimeSeriesLabels>
+
+<TimeSeries name="ts" value="$Left_Prox" valueType="url">
+    <Channel column="Left_Prox"/>
+</TimeSeries>
+   
+</View>
+```
+
 ---------------------------
 __How the data could look like:__
 
@@ -78,17 +103,19 @@ created by the model. The larger the absolute value of the weight, the more sign
 
 __Recursive feature elimination__ - least important features are pruned from the current set of features.
 
-    svc = LinearSVC(C=0.1, dual=False, loss='squared_hinge', penalty='l2', class_weight={0: 1, 1: 10}, max_iter=10000, verbose=True)
-    rfe = RFE(estimator=svc, n_features_to_select=30, step=1)
-    rfe.fit(X_train_standardized, y_train)
-    X_train_rfe = rfe.transform(X_train_standardized)
-    X_test_rfe = rfe.transform(X_test_standardized)
-    svc.fit(X_train_rfe, y_train)
-
+| see example |
+```python
+svc = LinearSVC(C=0.1, dual=False, loss='squared_hinge', penalty='l2', class_weight={0: 1, 1: 10}, max_iter=10000, verbose=True)
+rfe = RFE(estimator=svc, n_features_to_select=30, step=1)
+rfe.fit(X_train_standardized, y_train)
+X_train_rfe = rfe.transform(X_train_standardized)
+X_test_rfe = rfe.transform(X_test_standardized)
+svc.fit(X_train_rfe, y_train)
+```
 
 TO DO..
 
-- ~~Recursive Feature Elimination (RFE).~~ DONE
+- ~~Recursive Feature Elimination (RFE).~~
 - Improve model metrics of LinearSVC.
 - Implement EfficientNet or EfficientNet-Lite
 - Explore On-device learning
