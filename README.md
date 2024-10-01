@@ -1,10 +1,9 @@
-__TinyAI__
+---------------------
+__Tiny Machine Learning__
+---------------------
 
 > Design Cycle
-<img width="751" alt="image" src="https://github.com/WiresharkIO/TinyAI/assets/14985440/00f48379-0e04-46ff-81f6-7a7e78262eeb">
-
-----------------------
-
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/0e791e2f-f819-4daf-8542-740fbb47e352">
 
 
 ---------------------
@@ -40,6 +39,6 @@ __TinyAI__
 ---------------------
 > __References__
 
-[1] "Convert an XGBoost model into ONNX", ONNX, Available: https://onnx.ai/sklearn-onnx/auto_tutorial/plot_gexternal_xgboost.html
+[1] Tsoukas, V. et al. (2024) ‘A review on the emerging technology of tinyml’, ACM Computing Surveys, 56(10), pp. 1–37. doi:10.1145/3661820. 
 
 [2] "Model Optimization", ONNX Runtime, Available: https://onnxruntime.ai/docs/performance/model-optimizations/quantization.html
